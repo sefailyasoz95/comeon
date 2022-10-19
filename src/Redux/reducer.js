@@ -42,7 +42,34 @@ export const reducer = createSlice({
 			}
 			return response;
 		},
-		logout: () => {},
+		logout: async (username) => {
+			let response = {};
+			try {
+				let res = await axios.post(
+					`${BASE_URL}/logout`,
+					{
+						username,
+					},
+					{
+						headers: {
+							Accept: "application/json",
+							"Content-Type": "application/json",
+						},
+					},
+				);
+				response = {
+					data: res.data,
+					status: res.status,
+				};
+			} catch (error) {
+				response = {
+					data: null,
+					status: 400,
+					message: "Bad request !",
+				};
+			}
+			return response;
+		},
 		getGames: async () => {
 			let response = {};
 			try {
