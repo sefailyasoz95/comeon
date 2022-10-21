@@ -20,7 +20,6 @@ const players = {
 };
 
 module.exports = (req, res, next) => {
-	console.log("here: ", req.body);
 	if (req.method === "POST") {
 		if (req.path === "/login") {
 			const username = req.body.username;
@@ -53,7 +52,6 @@ module.exports = (req, res, next) => {
 			}
 		}
 	} else {
-		console.log("hheerree");
 		next();
 	}
 };
