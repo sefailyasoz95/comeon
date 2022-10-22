@@ -1,16 +1,18 @@
 import axios from "axios";
+import { ICategoryResponse, IGameResponse, ILogin, ILoginResponse } from "../Constants/types";
 const BASE_URL = "http://localhost:3001";
 export const GetGamesAsync = async () => {
-	let response = {};
+	let response: IGameResponse = {} as IGameResponse;
 	try {
 		let res = await axios.get(`${BASE_URL}/games`);
 		response = {
-			data: res.data,
+			games: res.data,
 			status: true,
+			message: "success",
 		};
 	} catch (error) {
 		response = {
-			data: null,
+			games: undefined,
 			status: false,
 			message: "Bad request !",
 		};
@@ -18,17 +20,17 @@ export const GetGamesAsync = async () => {
 	return response;
 };
 export const GetCategoriesAsync = async () => {
-	let response = {};
+	let response: ICategoryResponse = {} as ICategoryResponse;
 	try {
 		let res = await axios.get(`${BASE_URL}/categories`);
 		response = {
-			data: res.data,
+			categories: res.data,
 			status: true,
+			message: "success",
 		};
 	} catch (error) {
-		console.log("error: ", error);
 		response = {
-			data: null,
+			categories: undefined,
 			status: false,
 			message: "Bad request !",
 		};
@@ -36,7 +38,7 @@ export const GetCategoriesAsync = async () => {
 	return response;
 };
 
-export const LogoutAsync = async (username) => {
+export const LogoutAsync = async (username: string) => {
 	let response = {};
 	try {
 		let res = await axios.post(
@@ -54,6 +56,7 @@ export const LogoutAsync = async (username) => {
 		response = {
 			data: res.data,
 			status: true,
+			message: "success",
 		};
 	} catch (error) {
 		response = {
@@ -65,8 +68,8 @@ export const LogoutAsync = async (username) => {
 	return response;
 };
 
-export const LoginAsync = async ({ username, password }) => {
-	let response = {};
+export const LoginAsync = async ({ username, password }: ILogin) => {
+	let response: ILoginResponse = {} as ILoginResponse;
 	try {
 		let res = await axios.post(
 			`${BASE_URL}/login`,
@@ -84,9 +87,9 @@ export const LoginAsync = async ({ username, password }) => {
 		response = {
 			data: res.data.player,
 			status: true,
+			message: "success",
 		};
-	} catch (error) {
-		console.log("error: ", error);
+	} catch (error: any) {
 		response = {
 			data: null,
 			status: false,

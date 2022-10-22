@@ -1,40 +1,41 @@
-import { createAsyncThunk, th } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ILogin } from "../Constants/types";
 import { GetCategoriesAsync, GetGamesAsync, LoginAsync, LogoutAsync } from "./services";
 
-export const login = createAsyncThunk(`user/login`, async ({ username, password }, thunkAPI) => {
+export const login = createAsyncThunk(`user/login`, async ({ username, password }: ILogin, thunkAPI) => {
 	try {
 		return await LoginAsync({ username, password });
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) || error.message || error.toString();
 		return thunkAPI.rejectWithValue(message);
 	}
 });
 
-export const logout = createAsyncThunk(`user/logout`, async (username, thunkAPI) => {
+export const logout = createAsyncThunk(`user/logout`, async (username: string, thunkAPI) => {
 	try {
 		return await LogoutAsync(username);
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) || error.message || error.toString();
 		return thunkAPI.rejectWithValue(message);
 	}
 });
 
-export const getGames = createAsyncThunk(`others/getGames`, async (thunkAPI) => {
+export const getGames = createAsyncThunk(`others/getGames`, async (_, thunkAPI) => {
 	try {
 		return await GetGamesAsync();
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) || error.message || error.toString();
 		return thunkAPI.rejectWithValue(message);
 	}
 });
 
-export const getCategories = createAsyncThunk(`others/getCategories`, async (thunkAPI) => {
+export const getCategories = createAsyncThunk(`others/getCategories`, async (_, thunkAPI) => {
 	try {
 		return await GetCategoriesAsync();
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) || error.message || error.toString();
 		return thunkAPI.rejectWithValue(message);

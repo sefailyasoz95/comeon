@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ILogin } from "../Constants/types";
 import { login } from "../Redux/actions";
+import { useAppDispatch, useAppSelector } from "../Redux/store";
 
 const LoginPage = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [formError, setFormError] = useState(false);
-	const { isFetchingUser, error, message, success } = useSelector((state) => state.global);
-	const [formInputs, setFormInputs] = useState({
+	const { isFetchingUser, error, message, success } = useAppSelector((state) => state.global);
+	const [formInputs, setFormInputs] = useState<ILogin>({
 		username: "",
 		password: "",
 	});
@@ -18,7 +19,7 @@ const LoginPage = () => {
 			dispatch(login({ username: formInputs.username, password: formInputs.password }));
 		} else setFormError(true);
 	};
-	const handleInput = (event) => {
+	const handleInput = (event: React.FocusEvent<HTMLInputElement, Element>) => {
 		setFormInputs({ ...formInputs, [event.currentTarget.name]: event.currentTarget.value });
 	};
 	useEffect(() => {

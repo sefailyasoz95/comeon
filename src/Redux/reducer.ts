@@ -1,16 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ICategory, ICategoryResponse, IGame, IGameResponse, ILoginResponse, InitialState } from "../Constants/types";
 import { getCategories, getGames, login, logout } from "./actions";
-export const initialState = {
+export const initialState: InitialState = {
 	error: false,
 	success: false,
 	message: "",
 	isAuthenticated: false,
 	user: undefined,
 	isFetchingUser: false,
-	games: [],
-	categories: [],
+	games: [] as IGame[],
 	isFethingGames: false,
 	isFetchingCategories: false,
+	categories: [] as ICategory[],
 };
 
 export const reducer = createSlice({
@@ -23,7 +24,7 @@ export const reducer = createSlice({
 			.addCase(login.pending, (state) => {
 				state.isFetchingUser = true;
 			})
-			.addCase(login.fulfilled, (state, action) => {
+			.addCase(login.fulfilled, (state, action: PayloadAction<ILoginResponse>) => {
 				if (action.payload.status) {
 					state.isAuthenticated = true;
 					state.user = action.payload.data;
@@ -43,10 +44,10 @@ export const reducer = createSlice({
 				state.isFetchingUser = true;
 				state.success = false;
 			})
-			.addCase(logout.fulfilled, (state, action) => {
+			.addCase(logout.fulfilled, (state, action: any) => {
 				if (action.payload.status) {
 					state.isAuthenticated = false;
-					state.user = null;
+					state.user = undefined;
 				} else {
 					state.message = action.payload.message;
 					state.error = true;
@@ -61,9 +62,9 @@ export const reducer = createSlice({
 			.addCase(getGames.pending, (state) => {
 				state.isFethingGames = true;
 			})
-			.addCase(getGames.fulfilled, (state, action) => {
+			.addCase(getGames.fulfilled, (state, action: PayloadAction<IGameResponse>) => {
 				if (action.payload.status) {
-					state.games = action.payload.data;
+					state.games = action.payload.games;
 					state.success = true;
 				} else {
 					state.message = action.payload.message;
@@ -79,9 +80,9 @@ export const reducer = createSlice({
 			.addCase(getCategories.pending, (state) => {
 				state.isFetchingCategories = true;
 			})
-			.addCase(getCategories.fulfilled, (state, action) => {
+			.addCase(getCategories.fulfilled, (state, action: PayloadAction<ICategoryResponse>) => {
 				if (action.payload.status) {
-					state.categories = action.payload.data;
+					state.categories = action.payload.categories;
 					state.success = true;
 				} else {
 					state.message = action.payload.message;
