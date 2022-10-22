@@ -43,6 +43,8 @@ export const reducer = createSlice({
 			.addCase(logout.pending, (state) => {
 				state.isFetchingUser = true;
 				state.success = false;
+				state.message = "";
+				state.error = false;
 			})
 			.addCase(logout.fulfilled, (state, action: any) => {
 				if (action.payload.status) {

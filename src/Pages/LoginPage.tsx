@@ -31,6 +31,10 @@ const LoginPage = () => {
 	return (
 		<div className='flex min-h-screen items-center justify-center'>
 			<div className='border rounded-xl px-2 flex bg-white shadow-lg flex-col items-center py-5 xl:w-1/4 w-1/2'>
+				<span className='font-bold text-lg'>
+					Welcome to Come<span className='text-[#5bbd72]'>On</span>!
+				</span>
+				<span className='font-semibold text-sm'>Login to start gaming!</span>
 				<input
 					type='text'
 					name='username'
